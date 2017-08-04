@@ -34,14 +34,27 @@ x + y
 x = c(1,3,2,5)
 length(x)
 ```
+
 Using the Help for functions bei ?functionname
 ```{r}
 ?length()
 ```
-
+####Sequence 
+```{r}
+x = seq(1,10)
+x
+```
+```{r}
+x = 2:11
+x
+```
+```{r}
+x = seq ( - pi , pi , length =10)
+x
+```
 
 ####Matrix
-Create a Matrix
+#####Create a Matrix
 ```{r}
 x = matrix(data=c(1,2,3,4),nrow=2,ncol=2)
 x
@@ -50,6 +63,29 @@ Short version
 ```{r}
 x = matrix(c(1,2,3,4),2,2)
 ```
+
+Change filling order to row fill
+```{r}
+matrix(c(1,2,3,4),2,2,byrow=TRUE)
+```
+#####Select element from matrix
+```{r}
+x[2,2]
+```
+#####Subsection from matrix
+```{r}
+x = matrix (1:16 ,4 ,4)
+x
+x [c(1,3),c(2,4)]
+x [1:3,2:4]
+x [1:2,]
+x [-c(1,3),]
+```
+#####Dimensions
+```{r}
+dim(x)
+```
+
 
 ####Objects
 List all of the saved objects(data and functions)
@@ -66,4 +102,89 @@ Remove all objects
 rm(list=ls())
 ls()
 ```
+
+
+
+####Random Numbers
+Generate random normal distributed variables with mean of 0 and a standard deviation of 1
+```{r}
+x = rnorm(10)
+x
+```
+```{r}
+y = rnorm(10,mean=10,sd=0.1)
+y
+```
+Set seed for the RNG
+```{r}
+set.seed(232)
+rnorm(10)
+```
+
+####Correlation
+Compute the correlation of numbersets
+```{r}
+x = rnorm (50)
+y = x + rnorm (50 , mean =50 , sd =.1)
+cor ( x , y )
+```
+####Mean
+```{r}
+x = rnorm(100,mean=10,sd=0.1)
+mean(x)
+```
+####Variance
+```{r}
+x = rnorm(100,mean=10,sd=0.1)
+var(x)
+```
+####Standard deviation
+```{r}
+x = rnorm(100,mean=10,sd=0.1)
+sqrt(var(x))
+```
+###Graphics
+####Scatter plot
+```{r}
+x = rnorm (100)
+y = rnorm (100)
+plot (x ,y , xlab =" this is the x - axis " , ylab =" this is the y-axis", main =" Plot of X vs Y")
+```
+
+#### Contour plot
+```{r}
+x = seq (1 ,10)
+y = x
+f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
+fa =( f - t ( f ) ) /2
+contour (x ,y , fa , nlevels =45)
+```
+####Heat map
+```{r}
+x = seq (1 ,10)
+y = x
+f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
+fa =( f - t ( f ) ) /2
+image (x ,y , fa)
+```
+####Three-dimensional plot
+
+```{r}
+x = seq (1 ,10)
+y = x
+f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
+fa =( f - t ( f ) ) /2
+persp (x ,y , fa , theta =30 , phi =40)
+
+```
+
+####Save Plot
+Save plot to an output file. There are functions for different file types(pdf(), jpeg())
+```{r}
+pdf("Figure.pdf")
+plot(x,y,col="green")
+dev.off()
+```
+
+###Indexing Data
 
