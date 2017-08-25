@@ -3,11 +3,12 @@ title: "R Notebook"
 output:
   html_notebook: default
   html_document: default
+  pdf_document: default
+  word_document: default
 ---
+[R Markdown Help](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html)
+[Textbook](http://www-bcf.usc.edu/~gareth/ISL/data.html)
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
-
-##Introduction to R
 
 ###Basic Commands
 ####Defining Variables
@@ -186,5 +187,73 @@ plot(x,y,col="green")
 dev.off()
 ```
 
-###Indexing Data
+###Data import/export
+Import Data from a Text-file. fix() to view it
+```{r}
+Auto=read.table("Auto.data",header=T,na.strings ="?")
+```
+Import Data from a Excel-File
+```{r}
+Auto=read.csv("Auto.csv",header=T,na.strings="?")
+dim(Auto)
+```
+Remove Rows with empty cells
+```{r}
+Auto=na.omit(Auto)
+dim(Auto)
+```
+Variable names
+```{r}
+names(Auto)
+```
+
+
+Access Dataset variables
+```{r}
+ plot(Auto$cylinders,Auto$mpg)
+```
+Add Dataset Variables to data frame
+```{r}
+attach (Auto)
+plot(cylinders,mpg)
+```
+Convert Variables from Quantitative to Qualitative
+```{r}
+cylinders
+```
+```{r}
+cylinders=as.factor(cylinders)
+cylinders
+```
+Boxplot 
+If x-axis is is categorial
+```{r}
+plot(cylinders, mpg, col="red", varwidth=T, xlab="cylinders", xlab="cylinders", ylab="MPG")
+```
+Histogram
+```{r}
+hist(mpg, col=2, breaks=15)
+```
+Scatterplot
+```{r}
+pairs(Auto)
+```
+
+```{r}
+pairs(~horsepower + weight +
+acceleration , Auto )
+```
+Identify
+with Identify you can click on a data point to get the name
+example: 
+plot(horsepower , mpg )
+identify(horsepower , mpg , name)
+
+Summary
+```{r}
+summary(Auto)
+summary(mpg)
+```
+
+
 
