@@ -1,8 +1,8 @@
 ---
 title: "R Notebook"
 output:
-  html_document: default
   html_notebook: default
+  html_document: default
   pdf_document: default
   word_document: default
 ---
@@ -71,7 +71,7 @@ matrix(c(1,2,3,4),2,2,byrow=TRUE)
 ```
 #####Select element from matrix
 ```{r}
-x[2,2]
+x[2,1]
 ```
 #####Subsection from matrix
 ```{r}
@@ -254,6 +254,55 @@ Summary
 summary(Auto)
 summary(mpg)
 ```
+
+Apply function to each colum
+```{r}
+sapply(Auto[,-c(2,8,9)],range)
+sapply(Auto[,-c(2,8,9)], function(x){range(x)})
+```
+Subset
+```{r}
+dim(Auto)
+dim(Auto[-seq(10,85),])
+```
+Select
+horspower from all cars with 4 cylinders
+```{r}
+Auto[Auto$cylinders==4,4]
+```
+Numbers of cars with 4 cylinders
+```{r}
+FourCylinder <- Auto[Auto$cylinders==4,] 
+FourCylinder
+length(FourCylinder)
+```
+Min/Max
+Find the Strongest Car
+```{r}
+print(which.max(Auto$horsepower))
+Auto[which.max(Auto$horsepower),]
+```
+More then
+Find Cars with more than 220 hp
+```{r}
+Auto[Auto$horsepower > 220,]
+```
+
+
+Find Correlation
+```{r}
+All_Auto_Correlation <- cor(Auto[,1:8])
+sort( All_Auto_Correlation[,1] )
+```
+or
+```{r}
+AutoCor <- cor(Auto[,1:8])
+lower.tri(AutoCor, diag = TRUE)
+AutoCor[lower.tri(AutoCor, diag = TRUE)] <- NA
+AutoCorFrame <- as.data.frame(as.table(AutoCor))
+AutoCorFrame[order(-abs(AutoCorFrame$Freq)),]
+```
+
 
 
 

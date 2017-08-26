@@ -1,0 +1,103 @@
+---
+title: "Statistical Machine Learning"
+output: html_notebook
+---
+
+
+```{r}
+library(corrgram)
+```
+
+#Statistical Learning
+##7.4
+###a)
+```{r}
+data = matrix(data=c(0,3,0,2,0,0,0,1,3,0,1,2,-1,0,1,1,1,1), nrow=6, ncol=3, byrow=T)
+data
+sqrt(colSums(t(data)^2)) # the L2 distance from (0,0,0)
+
+```
+##7.5
+```{r}
+college=read.csv("Datasets/College.csv",header=T,na.strings="?")
+rownames(college) = college[,1]
+college=college[,-1]
+dim(college)
+summary(college)
+```
+```{r}
+pairs(college[,1:10])
+```
+```{r}
+plot(college$Outstate, college$Private)
+```
+```{r}
+Elite = rep ("No" , nrow ( college ) )
+Elite[college$Top10perc>50]="Yes"
+Elite = as.factor ( Elite )
+college = data.frame ( college , Elite )
+summary(Elite)
+plot(college$Outstate, college$Elite)
+
+```
+2.9
+```{r}
+Auto=read.csv("Datasets/Auto.csv",header=T,na.strings="?")
+Auto=na.omit(Auto)
+Auto
+sapply(Auto[,-c(2,8,9)],range)
+sapply(Auto[,-c(2,8,9)],mean)
+sapply(Auto[,-c(2,8,9)],sd)
+dim(Auto)
+Auto=Auto[-(10:85),]
+dim(Auto)
+sapply(Auto[,-c(2,8,9)],mean)
+sapply(Auto[,-c(2,8,9)],sd)
+```
+```{r}
+pairs(Auto)
+
+```
+
+```{r}
+Auto[Auto$cylinders==4,2]
+mean(Auto[Auto$cylinders==4,1])
+```
+
+```{r}
+cor(Auto[,1:8])
+```
+
+2.10
+```{r}
+library(MASS)
+Boston
+?Boston
+dim(Boston)
+```
+```{r}
+pairs(Boston)
+```
+```{r}
+bostCor <- cor(Boston)
+lower.tri(bostCor, diag = TRUE)
+bostCor[lower.tri(bostCor, diag = TRUE)] <- NA
+bcor <- as.data.frame(as.table(bostCor))
+bcor[order(-abs(bcor$Freq)),]
+```
+```{r}
+colnames(Boston[,1])
+```
+
+```{r}
+all_correlations = cor( Boston )
+print(all_correlations[,1])
+sapply(Boston[,1:8], function(x){plot(Boston[,1],x, xlab="crim")})
+```
+
+
+
+
+
+
+
