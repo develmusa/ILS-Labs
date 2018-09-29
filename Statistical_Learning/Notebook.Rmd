@@ -1,36 +1,59 @@
 ---
-title: "R Notebook"
+title: "Samuels R Notebook"
+author: Samuel Krieg
+date: Juli 21, 2017
 output:
+  html_document:
+    df_print: paged
+    toc: true
+    toc_depth: 2
+    toc_float: true
   html_notebook: default
-  html_document: default
   pdf_document: default
   word_document: default
 ---
-[R Markdown Help](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html)
 [Textbook](http://www-bcf.usc.edu/~gareth/ISL/data.html)
 
+# R Markdown
 
-###Basic Commands
-####Defining Variables
+## Help
+
+[R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+
+[R Markdown Help](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html)
+
+## Tabs {.tabset}
+
+### Tab 1
+
+Content 1
+
+### Tab 2
+
+Content 2
+
+# Basic Commands
+
+## Defining Variables
 ```{r}
 x <- 5
 x
 y = 9
 y
 ```
-####Vector
+## Vector
 Create a Vector of Numbers
 ```{r}
-x = c (1,3,2,5)
+x = c(1,3,2,5)
 x
 ```
 Addition of two Vectors
 ```{r}
-x = c (1,3,2,5)
-y = c (2,4,3,6)
+x = c(1,3,2,5)
+y = c(2,4,3,6)
 x + y
 ```
-####Using Functions
+## Using Functions
 ```{r}
 x = c(1,3,2,5)
 length(x)
@@ -40,7 +63,7 @@ Using the Help for functions bei ?functionname
 ```{r}
 ?length()
 ```
-####Sequence 
+## Sequence 
 ```{r}
 x = seq(1,10)
 x
@@ -50,12 +73,12 @@ x = 2:11
 x
 ```
 ```{r}
-x = seq ( - pi , pi , length =10)
+x = seq(-pi,pi,length =10)
 x
 ```
 
-####Matrix
-#####Create a Matrix
+## Matrix
+### Create a Matrix
 ```{r}
 x = matrix(data=c(1,2,3,4),nrow=2,ncol=2)
 x
@@ -69,36 +92,41 @@ Change filling order to row fill
 ```{r}
 matrix(c(1,2,3,4),2,2,byrow=TRUE)
 ```
-#####Select element from matrix
+### Select element from matrix
 ```{r}
 x[2,1]
 ```
-#####Subsection from matrix
+### Subsection from matrix
 ```{r}
-x = matrix (1:16 ,4 ,4)
+x = matrix(1:16 ,4 ,4)
 x
 x [c(1,3),c(2,4)]
 x [1:3,2:4]
 x [1:2,]
 x [-c(1,3),]
 ```
-#####Dimensions
+### Dimensions
 ```{r}
 dim(x)
 ```
-
-
-####Objects
+## Dataframe
+Set a Dataframe from two Vectors
+```{r}
+vector1 = c(1:10)
+vector2 = c(5:14)
+df = data.frame(vector1, vector2)
+```
+## Objects
 List all of the saved objects(data and functions)
 ```{r}
 ls()
 ```
-Remove objects
+### Remove objects
 ```{r}
 rm(y)
 ls()
 ```
-Remove all objects
+### Remove all objects
 ```{r}
 rm(list=ls())
 ls()
@@ -106,7 +134,7 @@ ls()
 
 
 
-####Random Numbers
+## Random Numbers
 Generate random normal distributed variables with mean of 0 and a standard deviation of 1
 ```{r}
 x = rnorm(10)
@@ -122,34 +150,67 @@ set.seed(232)
 rnorm(10)
 ```
 
-####Correlation
+# Statistical Functions
+## Correlation
 Compute the correlation of numbersets
 ```{r}
 x = rnorm (50)
 y = x + rnorm (50 , mean =50 , sd =.1)
 cor ( x , y )
 ```
-####Mean
+## Mean
 ```{r}
 x = rnorm(100,mean=10,sd=0.1)
 mean(x)
 ```
-####Variance
+## Variance
 ```{r}
 x = rnorm(100,mean=10,sd=0.1)
 var(x)
 ```
-####Standard deviation
+## Standard deviation
 ```{r}
 x = rnorm(100,mean=10,sd=0.1)
 sqrt(var(x))
 ```
-###Graphics
-####Scatter plot
+# Visualization
+## Plots
+### Basic Plots {.tabset}
+```{r}
+
+```
+
+#### Scatter plot
 ```{r}
 x = rnorm (100)
 y = rnorm (100)
-plot (x ,y , xlab =" this is the x - axis " , ylab =" this is the y-axis", main =" Plot of X vs Y")
+plot (x ,y , xlab ="x axis " , ylab ="y axis", main ="Scatter plot")
+```
+
+#### Bar plot
+```{r}
+vector1 = c(1:10)
+vector2 = c(5:14)
+matrix = matrix(c(vector1, vector2), nrow=10)
+
+barplot(matrix, beside=TRUE, ylim=c(0,15), main="Bar Plot", ylab="y axis", xlab="x axis", col="green")
+```
+
+#### Histogram
+```{r}
+vector1 = c(1:10)
+vector2 = c(5:14)
+
+hist(c(vector1, vector2), ylim=c(0,6), main="Histogram", ylab="y axis", xlab="x axis")
+```
+
+#### Box plot
+```{r}
+vector1 = c(1:10)
+vector2 = c(5:14)
+df = data.frame(vector1, vector2)
+
+boxplot(df, ylim=c(0,15), main="Box Plot", ylab="y axis", xlab="x axis")
 ```
 
 #### Contour plot
@@ -160,7 +221,8 @@ f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
 fa =( f - t ( f ) ) /2
 contour (x ,y , fa , nlevels =45)
 ```
-####Heat map
+
+#### Heat map
 ```{r}
 x = seq (1 ,10)
 y = x
@@ -168,7 +230,8 @@ f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
 fa =( f - t ( f ) ) /2
 image (x ,y , fa)
 ```
-####Three-dimensional plot
+
+#### Three-dimensional plot
 
 ```{r}
 x = seq (1 ,10)
@@ -179,7 +242,7 @@ persp (x ,y , fa , theta =30 , phi =40)
 
 ```
 
-####Save Plot
+### Save Plot
 Save plot to an output file. There are functions for different file types(pdf(), jpeg())
 ```{r}
 pdf("Figure.pdf")
@@ -187,7 +250,7 @@ plot(x,y,col="green")
 dev.off()
 ```
 
-###Data import/export
+# Data import/export
 Import Data from a Text-file. fix() to view it
 ```{r}
 Auto=read.table("Auto.data",header=T,na.strings ="?")
