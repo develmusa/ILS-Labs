@@ -12,8 +12,6 @@ output:
   pdf_document: default
   word_document: default
 ---
-[Textbook](http://www-bcf.usc.edu/~gareth/ISL/data.html)
-
 # Resources {.tabset}
 
 ## Documentation
