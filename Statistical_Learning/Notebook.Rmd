@@ -231,7 +231,7 @@ dataFrame = data.frame(c("h", "e", "l", "l", "o"),c("w", "o", "r", "l", "d"),c(1
 dataFrame
 ```
 
-## Objects
+## Variables
 List all of the saved objects(data and functions)
 ```{r}
 ls()
@@ -245,6 +245,18 @@ class(dataFrame)
 Get String representation
 ```{r}
 str(dataFrame)
+```
+
+Remove a variable
+```{r}
+rm(dataFrame)
+ls()
+```
+
+Remove all variables
+```{r}
+rm(list = ls())
+ls()
 ```
 
 
@@ -300,198 +312,140 @@ var(x)
 x = rnorm(100,mean=10,sd=0.1)
 sqrt(var(x))
 ```
-# Visualization
-## Plots
-### Basic Plots {.tabset}
-```{r}
 
-```
+# Data Preparation {.tabset}
 
-#### Scatter plot
-```{r}
-x = rnorm (100)
-y = rnorm (100)
-plot (x ,y , xlab ="x axis " , ylab ="y axis", main ="Scatter plot")
-```
-
-#### Bar plot
-```{r}
-vector1 = c(1:10)
-vector2 = c(5:14)
-matrix = matrix(c(vector1, vector2), nrow=10)
-
-barplot(matrix, beside=TRUE, ylim=c(0,15), main="Bar Plot", ylab="y axis", xlab="x axis", col="green")
-```
-
-#### Histogram
-```{r}
-vector1 = c(1:10)
-vector2 = c(5:14)
-
-hist(c(vector1, vector2), ylim=c(0,6), main="Histogram", ylab="y axis", xlab="x axis")
-```
-
-#### Box plot
-```{r}
-vector1 = c(1:10)
-vector2 = c(5:14)
-df = data.frame(vector1, vector2)
-
-boxplot(df, ylim=c(0,15), main="Box Plot", ylab="y axis", xlab="x axis")
-```
-
-#### Contour plot
-```{r}
-x = seq (1 ,10)
-y = x
-f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
-fa =( f - t ( f ) ) /2
-contour (x ,y , fa , nlevels =45)
-```
-
-#### Heat map
-```{r}
-x = seq (1 ,10)
-y = x
-f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
-fa =( f - t ( f ) ) /2
-image (x ,y , fa)
-```
-
-#### Three-dimensional plot
-
-```{r}
-x = seq (1 ,10)
-y = x
-f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
-fa =( f - t ( f ) ) /2
-persp (x ,y , fa , theta =30 , phi =40)
-
-```
-
-### Save Plot
-Save plot to an output file. There are functions for different file types(pdf(), jpeg())
-```{r}
-pdf("Figure.pdf")
-plot(x,y,col="green")
-dev.off()
-```
-
-# R Markdown
-
-## Tabs {.tabset}
-
-### Tab 1
-
-Content 1
-
-### Tab 2
-
-Content 2
-
-# Data import/export
+## Data import
 Import Data from a Text-file. fix() to view it
 ```{r}
 Auto=read.table("Auto.data",header=T,na.strings ="?")
+Auto[1:2,]
 ```
 Import Data from a Excel-File
 ```{r}
 Auto=read.csv("Auto.csv",header=T,na.strings="?")
-dim(Auto)
+Auto[1:2,]
 ```
-Remove Rows with empty cells
+
+Import from multiple Files
 ```{r}
-Auto=na.omit(Auto)
-dim(Auto)
+files <- list.files(path="dataFolderName", include.dirs=TRUE, full.names = TRUE)
+# creat your own function to read csv
+my.read <- function(Datei) read.csv(file=Datei, sep=";", header=FALSE)
+# apply your function to every file
+data <- lapply(files, my.read)
 ```
+
+Importing data from [The R Dataset Package](https://stat.ethz.ch/R-manual/R-patched/library/datasets/html/00Index.html)
+```{r}
+data(quakes) #Locations of Earthquakes off Fiji
+quakes[1:2,]
+```
+## Analyze Dataframe
 Variable names
 ```{r}
 names(Auto)
 ```
 
-
-Access Dataset variables
+Dimensions of Dataframe
 ```{r}
- plot(Auto$cylinders,Auto$mpg)
-```
-Add Dataset Variables to data frame
-```{r}
-attach (Auto)
-plot(cylinders,mpg)
-```
-Convert Variables from Quantitative to Qualitative
-```{r}
-cylinders
-```
-```{r}
-cylinders=as.factor(cylinders)
-cylinders
-```
-Boxplot 
-If x-axis is is categorial
-```{r}
-plot(cylinders, mpg, col="red", varwidth=T, xlab="cylinders", xlab="cylinders", ylab="MPG")
-```
-Histogram
-```{r}
-hist(mpg, col=2, breaks=15)
-```
-Scatterplot
-```{r}
-pairs(Auto)
+dim(Auto)
 ```
 
+Access dataframe Variables
 ```{r}
-pairs(~horsepower + weight +
-acceleration , Auto )
-```
-Identify
-with Identify you can click on a data point to get the name
-example: 
-plot(horsepower , mpg )
-identify(horsepower , mpg , name)
-
-Summary
-```{r}
-summary(Auto)
-summary(mpg)
+Auto$cylinders
 ```
 
-Apply function to each colum
+Show the first six rows
 ```{r}
-sapply(Auto[,-c(2,8,9)],range)
-sapply(Auto[,-c(2,8,9)], function(x){range(x)})
+head(Auto)
 ```
+
+
+Show the last six rows
+```{r}
+tail(Auto)
+```
+
+
+
+## Clean Data
+Remove Rows with empty cells
+```{r}
+dim(Auto)
+Auto=na.omit(Auto)
+dim(Auto)
+```
+
+## Filter Data
+Select one Datapoint
+```{r}
+Auto[1,2]
+```
+Get one column
+```{r}
+Auto[,"cylinders"]
+```
+
 Subset
 ```{r}
 dim(Auto)
 dim(Auto[-seq(10,85),])
 ```
-Select
-horspower from all cars with 4 cylinders
+
+Extract Dataframe from Column x with Value y 
 ```{r}
-Auto[Auto$cylinders==4,4]
+AutoWith8Cylinders = Auto[Auto$cylinders==5,]
+AutoWith8Cylinders
 ```
+
+Add Dataset Variables to data frame
+```{r}
+attach (Auto)
+cylinders
+```
+
+## Modify Data
+Apply function to each colum
+```{r}
+sapply(Auto[,-c(2,8,9)],range)
+sapply(Auto[,-c(2,8,9)], function(x){range(x)})
+```
+
+# Data Analysis {.tabset}
+
+## Summary
+```{r}
+summary(Auto)
+```
+
+```{r}
+summary(mpg)
+```
+
+## Min/Max
+```{r}
+print(which.max(Auto$horsepower))
+Auto[which.max(Auto$horsepower),]
+```
+
+## Count/Lenght
 Numbers of cars with 4 cylinders
 ```{r}
 FourCylinder <- Auto[Auto$cylinders==4,] 
 FourCylinder
 length(FourCylinder)
 ```
-Min/Max
-Find the Strongest Car
+
+## Qualitative
+Convert Variables from Quantitative to Qualitative
 ```{r}
-print(which.max(Auto$horsepower))
-Auto[which.max(Auto$horsepower),]
-```
-More then
-Find Cars with more than 220 hp
-```{r}
-Auto[Auto$horsepower > 220,]
+cylinders=as.factor(cylinders)
+cylinders
 ```
 
-
-Find Correlation
+## Correlation
 ```{r}
 All_Auto_Correlation <- cor(Auto[,1:8])
 sort( All_Auto_Correlation[,1] )
@@ -505,6 +459,123 @@ AutoCorFrame <- as.data.frame(as.table(AutoCor))
 AutoCorFrame[order(-abs(AutoCorFrame$Freq)),]
 ```
 
+## PCA
+Principal component Analysis
+```{r}
+library(FactoMineR)
+library(ggplot2)
+library(factoextra)
+```
+
+```{r}
+PcaAuto <- PCA(Auto[,1:8],scale.unit=TRUE,quali.sup=2,graph=FALSE)
+
+fviz_pca_biplot(PcaAuto, choix="ind", habillage="cylinders", label="var", invisible="quali", col.var="black")
+```
+
+## Linear Regression
+```{r}
+lm(horsepower~weight, Auto)
+```
+
+# Visualization
+## Plots {.tabset}
+### Scatter plot
+```{r}
+x = rnorm (100)
+y = rnorm (100)
+plot (x ,y , xlab ="x axis " , ylab ="y axis", main ="Scatter plot")
+```
+
+Linear Regression in Scatter Plot
+```{r}
+plot(Auto$weight,Auto$horsepower, xlab="Weight", ylab="Horsepower", main="Linear regression")
+abline(lm(horsepower~weight, Auto))
+```
+
+### Bar plot
+```{r}
+vector1 = c(1:10)
+vector2 = c(5:14)
+matrix = matrix(c(vector1, vector2), nrow=10)
+
+barplot(matrix, beside=TRUE, ylim=c(0,15), main="Bar Plot", ylab="y axis", xlab="x axis", col="green")
+```
+
+### Histogram
+```{r}
+vector1 = c(1:10)
+vector2 = c(5:14)
+
+hist(c(vector1, vector2), ylim=c(0,6), main="Histogram", ylab="y axis", xlab="x axis")
+```
+
+### Box plot
+
+```{r}
+plot(Auto$cylinders, Auto$mpg, col="red", xlab="cylinders", ylab="MPG")
+```
+
+### Contour plot
+```{r}
+x = seq (1 ,10)
+y = x
+f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
+fa =( f - t ( f ) ) /2
+contour (x ,y , fa , nlevels =45)
+```
+
+### Heat map
+```{r}
+x = seq (1 ,10)
+y = x
+f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
+fa =( f - t ( f ) ) /2
+image (x ,y , fa)
+```
+
+### Three-dimensional plot
+
+```{r}
+x = seq (1 ,10)
+y = x
+f = outer (x ,y , function (x , y ) cos ( y ) /(1+ x ^2) )
+fa =( f - t ( f ) ) /2
+persp (x ,y , fa , theta =30 , phi =40)
+
+```
+
+### Extended Plots
+```{r}
+pairs(Auto)
+```
+
+```{r}
+pairs(~horsepower + weight +
+acceleration , Auto )
+```
+
+### GGPlot2
+```{r}
+library(ggplot2)
+```
+
+```{r}
+x = rnorm(100)
+y = rnorm(100)
+df = data.frame(x, y)
+
+ggplot(data=df)+
+  aes(x=x, y=y)+
+  geom_point(col="red")+
+  labs(title="Scatter plot (ggplot2)", x="x axis", y= "y axis")
+```
 
 
-
+## Save Plot
+Save plot to an output file. There are functions for different file types(pdf(), jpeg())
+```{r}
+pdf("Figure.pdf")
+plot(x,y,col="green")
+dev.off()
+```
