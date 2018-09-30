@@ -1,7 +1,7 @@
 ---
 title: "Samuels R Notebook"
 author: Samuel Krieg
-date: Juli 21, 2017
+date: Nov 21, 2017
 output:
   html_document:
     df_print: paged
@@ -14,23 +14,35 @@ output:
 ---
 [Textbook](http://www-bcf.usc.edu/~gareth/ISL/data.html)
 
-# R Markdown
+# Resources {.tabset}
+
+## Documentation
+
+[The R Base Package](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html)
 
 ## Help
+
+[An Introduction to R](https://cran.r-project.org/doc/manuals/R-intro.html)
 
 [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
 
 [R Markdown Help](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html)
 
-## Tabs {.tabset}
+[RStudio Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/)
 
-### Tab 1
+[The R Graph Gallery](https://www.r-graph-gallery.com/)
 
-Content 1
+## Courses and Tutorials
 
-### Tab 2
+[Coursera - R Programming](https://www.coursera.org/learn/r-programming)
 
-Content 2
+[Data Camp](https://www.datacamp.com/courses)
+
+[Learn Shiny](http://shiny.rstudio.com/tutorial/)
+
+## Miscellaneous
+
+[R-bloggers](https://www.r-bloggers.com/)
 
 # Basic Commands
 
@@ -41,28 +53,80 @@ x
 y = 9
 y
 ```
-## Vector
-Create a Vector of Numbers
-```{r}
-x = c(1,3,2,5)
-x
-```
-Addition of two Vectors
-```{r}
-x = c(1,3,2,5)
-y = c(2,4,3,6)
-x + y
-```
+
 ## Using Functions
 ```{r}
 x = c(1,3,2,5)
 length(x)
 ```
 
-Using the Help for functions bei ?functionname
+Man Page
 ```{r}
 ?length()
 ```
+
+## Data Types {.tabset}
+
+### Logical
+Logical variables are holding Boolean values
+```{r}
+logicalTypeTrue = TRUE
+logicalTypeFalse = FALSE
+
+resultVector = c(logicalTypeTrue, logicalTypeFalse)
+resultVector
+```
+
+### Numeric
+Variable for all numbers
+```{r}
+numericType = 1.2
+```
+
+### Integer
+Integer variables can contain all natural numbers. As an example the number 6.4 will be converted to an integer. If you convert a number to the data type integer, it will be always round off to the next natural number.
+If you want to round up or round to a decimal point you have to use the numeric data type and the function round().
+```{r}
+integerType1 = 1
+integerType2 = as.integer(1.7)
+integerType3 = round(1.7)
+
+resultVector = c(integerType1, integerType2, integerType3)
+resultVector
+```
+### Character
+```{r}
+characterType = "CharacterTypeTest"
+characterType
+```
+
+## Vector {.tabset}
+### Instantiation 
+```{r}
+x = c(1,3,2,5)
+x
+```
+
+### Calculation
+Addition of two Vectors
+```{r}
+x = c(1,3,2,5)
+y = c(2,4,3,6)
+x + y
+```
+
+Multiplication of a Vectors
+```{r}
+10 * c(1,3,2,5)
+```
+
+### Comparison
+```{r}
+x = 1:3
+y = c(2,2,2)
+x > y
+```
+
 ## Sequence 
 ```{r}
 x = seq(1,10)
@@ -76,16 +140,51 @@ x
 x = seq(-pi,pi,length =10)
 x
 ```
+## Compare
+```{r}
+10 > 1
+```
 
-## Matrix
+```{r}
+10 < 1
+```
+
+```{r}
+10 >= 10
+```
+
+```{r}
+10 <= 10
+```
+
+```{r}
+10 == 10
+```
+
+
+```{r}
+10 ==! 1
+```
+
+
+## Matrix {.tabset}
+Matrices have only one data type.
+
 ### Create a Matrix
 ```{r}
-x = matrix(data=c(1,2,3,4),nrow=2,ncol=2)
-x
+matrix(data=c(1,2,3,4,5,6),nrow=2)
+```
+
+```{r}
+matrix(data=c(1,2,3,4,5,6),ncol=2)
+```
+
+```{r}
+matrix(data=c(1,2,3,4,5,6),nrow=2, ncol=2)
 ```
 Short version
 ```{r}
-x = matrix(c(1,2,3,4),2,2)
+matrix(c(1,2,3,4),2,2)
 ```
 
 Change filling order to row fill
@@ -94,6 +193,7 @@ matrix(c(1,2,3,4),2,2,byrow=TRUE)
 ```
 ### Select element from matrix
 ```{r}
+x = matrix(c(1,2,3,4),2,2,byrow=TRUE)
 x[2,1]
 ```
 ### Subsection from matrix
@@ -109,18 +209,45 @@ x [-c(1,3),]
 ```{r}
 dim(x)
 ```
+
+### Different Data Types
+Numeric will be converted to characters
+```{r}
+matrix(c(c("a", "b", "c"),c(1,2,3)),3)
+```
+
 ## Dataframe
+Data frames can contain several data types, but only one per column.
+###
 Set a Dataframe from two Vectors
 ```{r}
 vector1 = c(1:10)
 vector2 = c(5:14)
 df = data.frame(vector1, vector2)
 ```
+
+```{r}
+dataFrame = data.frame(c("h", "e", "l", "l", "o"),c("w", "o", "r", "l", "d"),c(1,2,3,4,5),c(6,7,8,9,10))
+dataFrame
+```
+
 ## Objects
 List all of the saved objects(data and functions)
 ```{r}
 ls()
 ```
+
+Get Object Type of Variable
+```{r}
+class(dataFrame)
+```
+
+Get String representation
+```{r}
+str(dataFrame)
+```
+
+
 ### Remove objects
 ```{r}
 rm(y)
@@ -249,6 +376,18 @@ pdf("Figure.pdf")
 plot(x,y,col="green")
 dev.off()
 ```
+
+# R Markdown
+
+## Tabs {.tabset}
+
+### Tab 1
+
+Content 1
+
+### Tab 2
+
+Content 2
 
 # Data import/export
 Import Data from a Text-file. fix() to view it
