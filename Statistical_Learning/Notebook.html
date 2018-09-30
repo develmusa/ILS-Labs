@@ -485,31 +485,18 @@ ls()</code></pre>
 <pre class="r"><code>rm(list = ls())
 ls()</code></pre>
 <pre><code>## character(0)</code></pre>
-<div id="remove-objects" class="section level3">
-<h3>Remove objects</h3>
-<pre class="r"><code>rm(y)</code></pre>
-<pre><code>## Warning in rm(y): Objekt 'y' nicht gefunden</code></pre>
-<pre class="r"><code>ls()</code></pre>
-<pre><code>## character(0)</code></pre>
-</div>
-<div id="remove-all-objects" class="section level3">
-<h3>Remove all objects</h3>
-<pre class="r"><code>rm(list=ls())
-ls()</code></pre>
-<pre><code>## character(0)</code></pre>
-</div>
 </div>
 <div id="random-numbers" class="section level2">
 <h2>Random Numbers</h2>
 <p>Generate random normal distributed variables with mean of 0 and a standard deviation of 1</p>
 <pre class="r"><code>x = rnorm(10)
 x</code></pre>
-<pre><code>##  [1] -0.1523295  0.2104936  0.1820559 -0.7228772 -2.1513272 -0.5971768
-##  [7] -1.1933599  1.5302011  0.3625456 -0.3080755</code></pre>
+<pre><code>##  [1] -1.7260009 -0.6950150 -1.2435955 -0.4580842 -0.3548381  2.0901159
+##  [7] -0.3669126 -0.6500663  0.5818205  1.0241718</code></pre>
 <pre class="r"><code>y = rnorm(10,mean=10,sd=0.1)
 y</code></pre>
-<pre><code>##  [1]  9.954483  9.949890 10.139233  9.939240  9.977941 10.164127  9.848336
-##  [8] 10.073189  9.998301 10.005313</code></pre>
+<pre><code>##  [1]  9.991415  9.810151  9.877324 10.021729  9.959003 10.108314  9.887483
+##  [8] 10.055317  9.993657  9.969713</code></pre>
 <p>Set seed for the RNG</p>
 <pre class="r"><code>set.seed(232)
 rnorm(10)</code></pre>

@@ -257,20 +257,6 @@ rm(list = ls())
 ls()
 ```
 
-
-### Remove objects
-```{r}
-rm(y)
-ls()
-```
-### Remove all objects
-```{r}
-rm(list=ls())
-ls()
-```
-
-
-
 ## Random Numbers
 Generate random normal distributed variables with mean of 0 and a standard deviation of 1
 ```{r}
